@@ -2,25 +2,28 @@
 # This code is licensed from CircleCI to the user under the MIT license.
 # See here for details: https://circleci.com/developer/orbs/licensing
 version: 2.1
-description: YAML Linter
+description: Fortune Teller
 
 executors:
   default:
     docker:
-      - image: cimg/python:3.10.4
+      - image: cimg/base:2022.03
 jobs:
-  yamllint:
-    description: Lint YAML Files
+  fun:
+    description: have some fun
     executor: default
     steps:
       - checkout
-      - run:
+      - run: 
           name: Install Dependencies
-          command: pip install --user yamllint
-      - run:
-          name: Lint YAMLs
-          command: /home/circleci/.local/bin/yamllint .circleci/config.yml
+          command: sudo apt-get update && sudo apt-get upgrade && sudo apt-get install -y apt-utils
+      - run: 
+          name: Install Fortune
+          command: sudo apt-get install -y fortune
+      - run: 
+          name: Run Fortune
+          command: /usr/games/fortune
 workflows:
-  yamllint-workflow:
+  fun-workflow:
     jobs:
-      - yamllint
+      - fun
